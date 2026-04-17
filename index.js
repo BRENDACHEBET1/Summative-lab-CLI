@@ -6,14 +6,14 @@ import { select, input } from "@inquirer/prompts";
 const questions = [
   { question: "Which is the tallest mountain in the world?", answer: "Mt Everest" },
   { question: "Which Ocean borders Kenya", answer: "Indian Ocean" },
-  { question: "How many colors does the Kenyan flag have", answer: "five" }
+  { question: "How many colors does the Kenyan flag have", answer: "four" }
 ];
 
 const results = [];
 
 // function to start the game, gives user option to start game, read instructions or quit
 async function startGame() {
-  console.log(chalk.blue("\n Welcome to Trivia Game\n"));
+  console.log(chalk.blue("Welcome to Trivia Game"));
 
   try {
     const choice = await select({
@@ -42,11 +42,11 @@ async function startGame() {
 }
 // Instructions 
 function showInstructions() {
-  console.log(chalk.green("\n Instructions:\n"));
+  console.log(chalk.green("Instructions"));
   console.log("Answer questions by typing and pressing Enter.");
   console.log("You have 30 seconds to complete the quiz.");
   console.log("For answers requiring a number, write in words eg. one instead of 1.")
-  
+
 }
 
 // functionality to enable user answer quiz
@@ -58,7 +58,7 @@ async function answerQuiz() {
   // Prints a message when time is up
   const timer = setTimeout(() => {
     timeUp = true;
-    console.log(chalk.red("\n Time's up!\n"));
+    console.log(chalk.red("Time's up!"));
   }, 30000);
 
   try {
@@ -68,9 +68,13 @@ async function answerQuiz() {
       const answer = await input({
         message: quiz.question
       });
+      // invalid input: empty input
+      if (!answer.trim()) {
+        console.log(chalk.red("Invalid input! Please enter an answer."));
+      }
+
       // edge case:capital letters and spaces
-      const isCorrect =
-        answer.trim().toLowerCase() === quiz.answer.toLowerCase();
+      const isCorrect = answer.trim().toLowerCase() === quiz.answer.toLowerCase();
       // immediate feedback to user after every quiz
       if (isCorrect) {
         console.log(chalk.green("Correct!\n"));
@@ -92,7 +96,7 @@ async function answerQuiz() {
   clearTimeout(timer);
 
   showResults();
-  console.log(chalk.yellow("Congratulations! Game ended"))
+  console.log(chalk.yellow("Game ended!"))
 }
 // results: plus total score
 function showResults() {
@@ -104,7 +108,7 @@ function showResults() {
     if (result.isCorrect) {
       console.log(chalk.green("Correct"));
     } else {
-      console.log(chalk.red(`Incorrect (Answer: ${result.correctAnswer})`));
+      console.log(chalk.red("Incorrect ") + chalk.green(`(Answer: ${result.correctAnswer})`));
     }
 
     console.log("");
