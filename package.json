@@ -1,0 +1,20 @@
+{
+  "name": "summative-lab-cli",
+  "version": "1.0.0",
+  "description": "A simple CLI trivia game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "trivia": "./index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "@inquirer/prompts": "^8.4.1",
+    "chalk": "^5.6.2"
+  }
+}
